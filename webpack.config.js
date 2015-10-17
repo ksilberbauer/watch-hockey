@@ -1,9 +1,11 @@
-var path = require('path');
+import path from 'path';
+import webpack from 'webpack';
 
-module.exports = {
+export default {
+  cache: true,
   entry: {
-    background: './background.js',
-    popup: './popup.js',
+    background: './js/background.js',
+    popup: './js/popup.js',
   },
   output: {
     path: path.join(__dirname, 'build'),
@@ -13,5 +15,5 @@ module.exports = {
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel?stage=0&optional=runtime' }
     ]
-  } 
-}
+  }
+};
