@@ -26,7 +26,6 @@ async function createNextWindow(prevWinId, prevParams) {
 };
 
 async function loop(params) {
-  clearTimeout(timeoutId); // if any still active
   const win = await createWindow(params);
   timeoutId = setTimeout(() => createNextWindow(win.id, params), TTL);
 };

@@ -91,18 +91,17 @@
 	  return _regeneratorRuntime.async(function loop$(context$1$0) {
 	    while (1) switch (context$1$0.prev = context$1$0.next) {
 	      case 0:
-	        clearTimeout(timeoutId); // if any still active
-	        context$1$0.next = 3;
+	        context$1$0.next = 2;
 	        return _regeneratorRuntime.awrap((0, _chromePromisesJs.createWindow)(params));
 
-	      case 3:
+	      case 2:
 	        win = context$1$0.sent;
 
 	        timeoutId = setTimeout(function () {
 	          return createNextWindow(win.id, params);
 	        }, _constants.TTL);
 
-	      case 5:
+	      case 4:
 	      case 'end':
 	        return context$1$0.stop();
 	    }
