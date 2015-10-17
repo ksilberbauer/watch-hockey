@@ -18,7 +18,7 @@ const devCompiler = webpack(myDevConfig);
 gulp.task('webpack:build-dev', done => {
   devCompiler.run((err, stats) => {
     if (err) throw new gutil.PluginError('webpack:build-dev', err);
-    // gutil.log('[webpack:build-dev', stats.toString({ colors: true }));
+    gutil.log('[webpack:build-dev', stats.toString({ colors: true }));
     done();
   });
 });

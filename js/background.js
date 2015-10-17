@@ -22,7 +22,7 @@ async function createNextWindow(prevWinId, prevParams) {
     width: prevWin.width 
   };
   await removeWindow(prevWin.id);
-  await loop(nextParams); 
+  setTimeout(() => loop(nextParams) , 750); // delay to prevent cookie
 };
 
 async function loop(params) {
