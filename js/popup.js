@@ -9,20 +9,21 @@ import {
 
 import {
   getCurrentTab,
+  sendMessage,
 } from './chromePromises';
 
 async function setUrl() {
-  const tab = await getCurrentTab()
+  const tab = await getCurrentTab();
   document.getElementById('url').value = tab.url;
 };
 
 window.onload = setUrl();
 
-document.getElementById('start').onclick = () => {
+document.getElementById('start').onclick = async function() {  
   const params = { ...PARAMS, url: document.getElementById('url').value };
-  chrome.runtime.sendMessage(start(params), res => console.log(res));
+  await sendMessage(start(params));
 };
   
-document.getElementById('stop').onclick = () => {
-  chrome.runtime.sendMessage(stop(), res => console.log(res));
+document.getElementById('stop').onclick = async function() {
+  await sendMessage(stop());
 };

@@ -8,6 +8,8 @@ import {
   createWindow,
   getWindow,
   removeWindow,
+  focusWindow,
+  getCurrentTab,
 } from './chromePromises.js';
 
 let timeoutId;
@@ -26,8 +28,10 @@ async function createNextWindow(prevWinId, prevParams) {
 };
 
 async function loop(params) {
+  const tab = await getCurrentTab();
   const win = await createWindow(params);
   timeoutId = setTimeout(() => createNextWindow(win.id, params), TTL);
+  await focusWindow(tab.windowId);
 };
 
 const router = (req, sender, respond) => {
@@ -35,7 +39,7 @@ const router = (req, sender, respond) => {
     case START:
       clearTimeout(timeoutId);
       loop(req.params);
-      break;s
+      break;
     case STOP:
       clearTimeout(timeoutId);
       break;
