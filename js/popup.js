@@ -1,29 +1,14 @@
-import {
-  start,
-  stop,
-} from './actions';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-import {
-  PARAMS,
-} from './constants';
+import { start, stop, } from './actions';
+import { PARAMS, } from './constants';
+import { getCurrentTab, } from './chromePromises';
 
-import {
-  getCurrentTab,
-  sendMessage,
-} from './chromePromises';
-
-async function setUrl() {
-  const tab = await getCurrentTab();
-  document.getElementById('url').value = tab.url;
-};
-
-window.onload = setUrl();
-
-document.getElementById('start').onclick = async function() {  
-  const params = { ...PARAMS, url: document.getElementById('url').value };
-  await sendMessage(start(params));
-};
-  
-document.getElementById('stop').onclick = async function() {
-  await sendMessage(stop());
+window.onload = async function init() {
+  const tab = await getCurrentTab()
+  ReactDOM.render(
+    <App url={tab.url} defaultParams={PARAMS} startAction={start} stopAction={stop} />,
+    document.body
+  );
 };
