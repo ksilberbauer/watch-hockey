@@ -6,9 +6,9 @@ import { PARAMS, } from './constants';
 import { getCurrentTab, } from './chromePromises';
 
 window.onload = async function init() {
-  const tab = await getCurrentTab()
+  const tab = await getCurrentTab();
   ReactDOM.render(
     <App url={tab.url} defaultParams={PARAMS} startAction={start} stopAction={stop} />,
-    document.body
+    document.getElementById('app')
   );
 };
