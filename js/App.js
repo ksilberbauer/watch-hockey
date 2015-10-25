@@ -16,7 +16,7 @@ export default class App extends Component {
     return (
       <div>
         <label>URL: 
-          <input ref={ ref => this.urlInput = ref } defaultValue={this.props.url} />
+          <input ref={ ref => this.urlInput = ref } defaultValue={this.props.defaultUrl} />
         </label>
         <button onClick={this.start}>Start</button>
         <button onClick={this.stop}>Stop</button>
