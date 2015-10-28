@@ -1,6 +1,7 @@
 import {
   START,
   STOP,
+  CLEAR_PARAMS,
   TTL,
 } from './constants';
 
@@ -13,10 +14,11 @@ import {
 } from './chromePromises.js';
 
 let timeoutId;
+let nextParams;
 
 async function createNextWindow(prevWinId, prevParams) {
   const prevWin = await getWindow(prevWinId)
-  const nextParams = { 
+  nextParams = { 
     ...prevParams, 
     top: prevWin.top, 
     left: prevWin.left, 
@@ -38,11 +40,13 @@ const router = (req, sender, respond) => {
   switch(req.type) {
     case START:
       clearTimeout(timeoutId);
-      loop(req.params);
+      loop(nextParams || req.params);
       break;
     case STOP:
       clearTimeout(timeoutId);
       break;
+    case CLEAR_PARAMS:
+      nextParams = null;
     default:
       console.log('Error: Invalid request type', req.type);
   }

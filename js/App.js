@@ -8,9 +8,9 @@ export default class App extends Component {
     sendMessage(this.props.startAction(params));
   }
   
-  stop = () => {
-    sendMessage(this.props.stopAction());
-  }
+  stop = () => sendMessage(this.props.stopAction())
+
+  clearParams = () => sendMessage(this.props.clearParams())
 
   render() {
     return (
@@ -20,6 +20,7 @@ export default class App extends Component {
         </label>
         <button onClick={this.start}>Start</button>
         <button onClick={this.stop}>Stop</button>
+        <button onClick={this.clearParams}>Clear Params</button>
       </div>
     );
   }
