@@ -39,6 +39,7 @@ async function createNextWindow(prevWinId, prevParams) {
 async function loop(params) {
   const tab = await getCurrentTab();
   const win = await createWindow(params);
+  if (!win) { throw new Error('Make sure the extension has incognito allowed!'); }
   currentWinId = win.id;
   timeoutId = setTimeout(() => createNextWindow(currentWinId, params), TTL);
   await focusWindow(tab.windowId);
