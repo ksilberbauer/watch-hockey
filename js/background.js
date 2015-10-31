@@ -1,3 +1,9 @@
+// TODO: fix nextParams/clearParams
+// TODO: show time remaining in UI
+// TODO: make UI prettier
+// TODO: make the button stop by default if pressed? then timer UI would need to be on the button
+// TODO: checkbox about whether focus should be returned to window.opener
+
 import {
   START,
   STOP,
@@ -15,6 +21,7 @@ import {
 
 let timeoutId;
 let nextParams;
+let currentWinId;
 
 async function createNextWindow(prevWinId, prevParams) {
   const prevWin = await getWindow(prevWinId)
@@ -32,9 +39,12 @@ async function createNextWindow(prevWinId, prevParams) {
 async function loop(params) {
   const tab = await getCurrentTab();
   const win = await createWindow(params);
-  timeoutId = setTimeout(() => createNextWindow(win.id, params), TTL);
+  currentWinId = win.id;
+  timeoutId = setTimeout(() => createNextWindow(currentWinId, params), TTL);
   await focusWindow(tab.windowId);
 };
+
+const close = () => removeWindow(currentWinId);
 
 const router = (req, sender, respond) => {
   switch(req.type) {
@@ -44,6 +54,7 @@ const router = (req, sender, respond) => {
       break;
     case STOP:
       clearTimeout(timeoutId);
+      close();
       break;
     case CLEAR_PARAMS:
       nextParams = null;
