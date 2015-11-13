@@ -3,7 +3,6 @@
 // TODO: make UI prettier
 // TODO: make the button stop by default if pressed? then timer UI would need to be on the button
 // TODO: turn start button into stop when running
-// BUG: STOP doesn't work during the 750ms delay
 
 import {
   INIT,
@@ -24,6 +23,7 @@ import {
 } from './chromePromises.js';
 
 let timeoutId;
+let delayTimeoutId;
 let nextParams;
 let currentWinId;
 let doRefocus = true;
@@ -38,7 +38,7 @@ async function createNextWindow(prevWinId, prevParams) {
     width: prevWin.width 
   };
   await removeWindow(prevWin.id);
-  setTimeout(() => loop(nextParams) , 750); // delay to prevent cookie
+  delayTimeoutId = setTimeout(() => loop(nextParams) , 750); // delay to prevent cookie
 };
 
 async function loop(params) {
@@ -64,6 +64,7 @@ const router = (req, sender, respond) => {
       return true;
     case STOP:
       clearTimeout(timeoutId);
+      clearTimeou(delayTimeoutId);
       close();
       return true;
     case DO_REFOCUS:
