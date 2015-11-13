@@ -6,6 +6,7 @@
 // TODO: turn start button into stop when running
 
 import {
+  INIT,
   START,
   STOP,
   DO_REFOCUS,
@@ -25,7 +26,7 @@ import {
 let timeoutId;
 let nextParams;
 let currentWinId;
-let doRefocus;
+let doRefocus = true;
 
 async function createNextWindow(prevWinId, prevParams) {
   const prevWin = await getWindow(prevWinId)
@@ -53,6 +54,9 @@ const close = () => removeWindow(currentWinId);
 
 const router = (req, sender, respond) => {
   switch(req.type) {
+    case INIT:
+      respond({ params: nextParams, doRefocus });
+      return true;
     case START:
       clearTimeout(timeoutId);
       doRefocus = req.doRefocus;

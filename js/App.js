@@ -9,7 +9,7 @@ export default class App extends Component {
 
   start = () => {
     const params = { ...this.props.defaultParams, url: this.urlInput.value };
-    sendMessage(this.props.startAction(params), this.state.doRefocusChecked);
+    sendMessage(this.props.startAction(params, this.state.doRefocusChecked), this.state.doRefocusChecked);
   }
 
   doRefocus = isChecked => {

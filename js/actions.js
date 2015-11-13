@@ -3,7 +3,7 @@ import {
   STOP,
   CLEAR_PARAMS,
   DO_REFOCUS,
-  GET_STATE,
+  INIT,
   PARAMS,
 } from './constants';
 
@@ -15,4 +15,4 @@ export const clearParams = () => ({ type: CLEAR_PARAMS });
 
 export const doRefocus = doRefocus => ({ type: DO_REFOCUS, doRefocus });
 
-export const getState = () => ({ type: GET_STATE });
+export const init = () => ({ type: INIT });
