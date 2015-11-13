@@ -2,8 +2,8 @@
 // TODO: show time remaining in UI
 // TODO: make UI prettier
 // TODO: make the button stop by default if pressed? then timer UI would need to be on the button
-// TODO: checkbox about whether focus should be returned to window.opener
 // TODO: turn start button into stop when running
+// BUG: STOP doesn't work during the 750ms delay
 
 import {
   INIT,

@@ -1,23 +1,19 @@
 import ReactDOM from 'react-dom';
 import App from './App';
 
-import { start, stop, clearParams, doRefocus, init, } from './actions';
-import { PARAMS, } from './constants';
 import { getCurrentTab, sendMessage, } from './chromePromises';
+import {
+  INIT,
+} from './constants';
 
-window.onload = async function initApp() {
+window.onload = async function init() {
   const tab = await getCurrentTab();
-  const state = await sendMessage(init());
-  console.log(state);
+  const initialState = await sendMessage({ type: INIT });
+
   ReactDOM.render(
     <App 
       defaultUrl={tab.url} 
-      defaultParams={PARAMS}
-      doRefocusClicked={state.doRefocus} 
-      startAction={start} 
-      stopAction={stop} 
-      clearParams={clearParams}
-      doRefocus={doRefocus} />,
+      doRefocus={initialState.doRefocus} />,
     document.getElementById('app')
   );
 };

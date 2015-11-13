@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import { sendMessage, } from './chromePromises';
+import {
+  START,
+  STOP,
+  DO_REFOCUS,
+  PARAMS,
+} from './constants';
 
 export default class App extends Component {
 
-  state = {
-    doRefocusChecked: this.props.doRefocusClicked,
-  }
-
   start = () => {
-    const params = { ...this.props.defaultParams, url: this.urlInput.value };
-    sendMessage(this.props.startAction(params, this.state.doRefocusChecked), this.state.doRefocusChecked);
-  }
-
-  doRefocus = isChecked => {
-    sendMessage(this.props.doRefocus(isChecked));
-    this.setState({ ...this.state, doRefocusChecked: isChecked });
+    const params = { ...PARAMS, url: this.urlInput.value };
+    sendMessage({ type: START, params, doRefocus: this.doRefocusInput.checked });
   }
 
   render() {
@@ -31,18 +28,19 @@ export default class App extends Component {
           Refocus Opener: 
           <input
             type='checkbox'
-            onChange={ e => this.doRefocus(e.target.checked) } 
-            checked={ this.state.doRefocusChecked }
+            ref={ ref => this.doRefocusInput = ref }
+            onChange={ e => sendMessage({ type: DO_REFOCUS, doRefocus: e.target.checked }) } 
+            defaultChecked={ this.props.doRefocusChecked }
             style={styles.clickable} />
         </label>
         <div style={{ flexGrow: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <button onClick={this.start} style={styles.clickable}>Start</button>
-          <button onClick={ () => sendMessage(this.props.stopAction()) } style={styles.clickable}>
+          <button onClick={ () => sendMessage({ type: STOP }) } style={styles.clickable}>
             Stop
           </button>
         </div>
         <div style={{ flexGrow: 2, display: 'flex', alignItems: 'center' }}>
-          <button onClick={ () => sendMessage(this.props.clearParams()) } style={styles.clickable}>
+          <button onClick={ () => sendMessage({ CLEAR_PARAMS }) } style={styles.clickable}>
             Clear Params
           </button>
         </div>
