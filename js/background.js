@@ -59,12 +59,13 @@ const router = (req, sender, respond) => {
       return true;
     case START:
       clearTimeout(timeoutId);
+      clearTimeout(delayTimeoutId);
       doRefocus = req.doRefocus;
       loop(nextParams || req.params);
       return true;
     case STOP:
       clearTimeout(timeoutId);
-      clearTimeou(delayTimeoutId);
+      clearTimeout(delayTimeoutId);
       close();
       return true;
     case DO_REFOCUS:
