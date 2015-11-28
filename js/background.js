@@ -47,7 +47,7 @@ async function loop(params) {
   if (!win) { throw new Error('Make sure the extension has incognito allowed!'); }
   currentWinId = win.id;
   timeoutId = setTimeout(() => createNextWindow(currentWinId, params), TTL);
-  if (doRefocus) { await focusWindow(tab.windowId); }
+  if (doRefocus) { focusWindow(tab.windowId); }
 };
 
 const close = () => removeWindow(currentWinId);
@@ -61,7 +61,7 @@ const router = (req, sender, respond) => {
       clearTimeout(timeoutId);
       clearTimeout(delayTimeoutId);
       doRefocus = req.doRefocus;
-      loop(nextParams || req.params);
+      loop(req.params);
       return true;
     case STOP:
       clearTimeout(timeoutId);
